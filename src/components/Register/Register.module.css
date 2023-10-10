@@ -1,0 +1,8 @@
+.butn:hover {
+	background-color: gray !important;
+	width: 200px;
+	color: aquamarine !important;
+}
+.butn {
+	width: 200px;
+}
