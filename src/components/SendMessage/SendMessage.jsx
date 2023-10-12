@@ -3,21 +3,41 @@ import avatar from '../../img/avatar.png';
 import { useParams } from 'react-router-dom';
 import { useFormik } from 'formik';
 import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { sendMessage } from '../../Redux/messagesSlice';
 function SendMessage() {
 	let id = useParams();
-	async function addMessage(values) {
-		let data = { ...values, receivedId: id.id };
-		// console.log(data);
-		let res = await axios.post(
-			'https://sara7aiti.onrender.com/api/v1/message',
-			data
-		);
-		// console.log('res', res);
-	}
-	let formik = useFormik({
+
+	//
+	// async function addMessage(values) {
+	// 	let data = { ...values, receivedId: id.id };
+	// 	let res = await axios.post(
+	// 		'https://sara7aiti.onrender.com/api/v1/message',
+	// 		data
+	// 	);
+	// }
+	//   let formik = useFormik({
+	// 	initialValues: { messageContent: '' },
+	// 	onSubmit: (values) => {
+	// 		addMessage(values);
+	// 	},
+	// });
+
+	//TODO using Redux
+	const dispatch = useDispatch();
+	const sendingStatus = useSelector((state) => state.messages);
+
+	const formik = useFormik({
 		initialValues: { messageContent: '' },
 		onSubmit: (values) => {
-			addMessage(values);
+			if (sendingStatus !== 'pending') {
+				dispatch(
+					sendMessage({
+						messageContent: values.messageContent,
+						receivedId: id.id,
+					})
+				);
+			}
 		},
 	});
 

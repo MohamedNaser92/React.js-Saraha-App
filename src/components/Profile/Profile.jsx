@@ -1,14 +1,16 @@
 import styles from './Profile.module.css';
 import avatar from '../../img/avatar.png';
-import axios from 'axios';
+// import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import jwtDecode from 'jwt-decode';
-import { useQuery } from 'react-query';
+// import { useQuery } from 'react-query';
 import PopUp from '../PopUp/PopUp';
+import { useDispatch, useSelector } from 'react-redux';
+import { getMessages } from '../../Redux/messagesSlice';
 function Profile() {
 	const [modalShow, setModalShow] = useState(false);
-	const [allMessages, setAllMessages] = useState([]);
+	// const [allMessages, setAllMessages] = useState([]);
 	const [userId, setUserID] = useState('');
 	const [userName, setUserName] = useState('');
 	const [sharelink, setSharelink] = useState('');
@@ -25,22 +27,35 @@ function Profile() {
 		setUserID(decoded.id);
 		setUserName(decoded.name);
 	}
+	//TODO getMessages using Query React
+	// function getMessages() {
+	// 	return axios.get('https://sara7aiti.onrender.com/api/v1/message', {
+	// 		headers: { token: localStorage.getItem('userToken') },
+	// 	});
+	// }
 
-	function getMessages() {
-		return axios.get('https://sara7aiti.onrender.com/api/v1/message', {
-			headers: { token: localStorage.getItem('userToken') },
-		});
-	}
+	// let query = useQuery('messages', getMessages);
 
-	let query = useQuery('messages', getMessages);
+	// useEffect(() => {
+	// 	if (query.data) {
+	// 		setAllMessages(query.data.data?.allMessages);
+	// 	}
+
+	// 	getUserData();
+	// }, [query.data]);
+
+	//TODO getMessages using REDUX
+
+	const dispatch = useDispatch();
 
 	useEffect(() => {
-		if (query.data) {
-			setAllMessages(query.data.data?.allMessages);
-		}
-
 		getUserData();
-	}, [query.data]);
+		dispatch(getMessages());
+	}, [dispatch]);
+	const allMessages = useSelector(
+		(state) => state.messageRedx.data.allMessages
+	);
+
 	return (
 		<>
 			<div>
@@ -74,7 +89,7 @@ function Profile() {
 				{/* =================messages=================== */}
 				<div className="container text-center my-5 text-center ">
 					<div className="row">
-						{allMessages.length == 0 ? (
+						{allMessages?.length == 0 ? (
 							<div className="col-md-12">
 								<div className="card py-5 bg-body-secondary">
 									<p>You don't have any messages... </p>
@@ -83,7 +98,7 @@ function Profile() {
 						) : (
 							''
 						)}
-						{allMessages.map((ele) => (
+						{allMessages?.map((ele) => (
 							<div
 								className="card py-5 bg-body-secondary  mb-5 t fs-2 text fw-bold"
 								key={ele._id}>
