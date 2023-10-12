@@ -7,7 +7,7 @@ import jwtDecode from 'jwt-decode';
 // import { useQuery } from 'react-query';
 import PopUp from '../PopUp/PopUp';
 import { useDispatch, useSelector } from 'react-redux';
-import { getMessages, selectAllMessages } from '../../Redux/addMessagesSlice';
+import { getMessages } from '../../Redux/messagesSlice';
 function Profile() {
 	const [modalShow, setModalShow] = useState(false);
 	// const [allMessages, setAllMessages] = useState([]);

@@ -1,4 +1,4 @@
-import { messageReducer } from './addMessagesSlice';
+import { messageReducer } from './messagesSlice';
 
 const { configureStore } = require('@reduxjs/toolkit');
 

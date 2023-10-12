@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { useFormik } from 'formik';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import { sendMessage } from '../../Redux/addMessagesSlice';
+import { sendMessage } from '../../Redux/messagesSlice';
 function SendMessage() {
 	let id = useParams();
 
