@@ -7,7 +7,7 @@ function Layout() {
 	return (
 		<>
 			<Navbar />
-			<div className="container vh-100">
+			<div className="container ">
 				<Outlet />
 			</div>
 			<Footer />
